@@ -48,6 +48,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::patch('/{id}', [ProductController::class, 'update']);
     });
 
+
     // Authenticated user routes
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/user', function (Request $request) {

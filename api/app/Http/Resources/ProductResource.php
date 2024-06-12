@@ -1,5 +1,6 @@
 <?php
 
+// ProductResource.php
 namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
@@ -14,9 +15,15 @@ class ProductResource extends JsonResource
             'name' => $this->name,
             'price' => $this->formattedPrice(),
             'description' => $this->description,
-            'quantity' => $this->quantity,
+            'category' => $this->category,
             'photo' => $this->photo_url,
-            'category' => $this->category,  // Include the category
+            'sizes' => $this->sizes->map(function ($size) {
+                return [
+                    'size' => $size->size,
+                    'quantity' => $size->quantity // Include quantity for each size
+                ];
+            }),
         ];
     }
 }
+

@@ -17,7 +17,12 @@
               <p class="text-sm text-gray-500">{{ product.description }}</p>
               <p class="text-sm text-gray-500">{{ product.category }}</p>
               <h1 class="mx-auto font-semibold">${{ product.price }}</h1>
-              <div class="p-2">Quantity: {{ product.quantity }}</div>
+              <h3 class="font-bold">Sizes and Quantities:</h3>
+                <ul>
+                  <li v-for="size in product.sizes" :key="size.size" class="text-gray-400">
+                    {{ size.size }}: {{ size.quantity }}
+                  </li>
+                </ul>
             </nuxt-link>
         </section>
       </div>

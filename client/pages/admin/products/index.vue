@@ -24,8 +24,18 @@
               <h2 class="p-2 text-xl font-bold text-gray-100">{{ product.name }}</h2>
               <p class="p-2 text-gray-400">{{ product.description }}</p>
               <p class="p-2 text-gray-400">{{ product.category }}</p>
-              <div class="p-2 text-gray-100">Quantity: {{ product.quantity }}</div>
               <div class="p-2 text-gray-100">Price: ${{ product.price }}</div>
+              <div class="p-2 text-gray-100" v-if="product.sizes && product.sizes.length">
+              <h3 class="font-bold">Sizes and Quantities:</h3>
+              <ul>
+                <li v-for="size in product.sizes" :key="size.size" class="text-gray-400">
+                  {{ size.size }}: {{ size.quantity }}
+                </li>
+              </ul>
+            </div>
+            <div class="p-2 text-gray-100" v-else>
+              <p>No sizes and quantities available.</p>
+            </div>
               <div class="flex w-full mt-auto">
                 <nuxt-link :to="`/admin/products/${product.id}`">
                   <button class="px-4 py-2 font-bold text-gray-100 transition-colors duration-300 ease-in-out bg-indigo-600 rounded hover:bg-indigo-500">

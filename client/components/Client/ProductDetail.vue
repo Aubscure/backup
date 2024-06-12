@@ -17,9 +17,31 @@
         <p class="text-sm tracking-wider">{{ product.category }}</p>
         <h1 class="text-2xl font-black">${{ product.price }}</h1>
 
+        <!-- Radio buttons for sizes -->
+        <div class="mt-5">
+          <h3 class="text-lg font-semibold">Select Size:</h3>
+          <div class="flex flex-col gap-2">
+            <label v-for="size in product.sizes" :key="size.size" class="flex items-center gap-2">
+              <input type="radio" :value="size.size" v-model="selectedSize" />
+              <span>{{ size.size }} ({{ size.quantity }} available)</span>
+            </label>
+          </div>
+        </div>
+
         <div class="flex flex-row gap-3 mt-5">
-          <UButton class="bg-yellow-600 rounded hover:bg-yellow-600 hover:bg-opacity-50 dark:bg-yellow-200 dark:hover:bg-yellow-300" label="Add to Cart" icon="i-bi-cart-plus"/>
-          <UButton class="rounded " label="Buy now" icon="i-bi-cart-check" trailing/>
+          <UButton 
+            class="bg-yellow-600 rounded hover:bg-yellow-600 hover:bg-opacity-50 dark:bg-yellow-200 dark:hover:bg-yellow-300" 
+            :disabled="!selectedSize" 
+            label="Add to Cart" 
+            icon="i-bi-cart-plus"
+          />
+          <UButton 
+            class="rounded" 
+            :disabled="!selectedSize" 
+            label="Buy now" 
+            icon="i-bi-cart-check" 
+            trailing
+          />
         </div>
       </div>
     </div>
@@ -27,6 +49,7 @@
 </template>
 
 <script setup>
+import { ref } from 'vue';
 
 const props = defineProps({
   backLink: {
@@ -47,11 +70,14 @@ const props = defineProps({
       price: 0,
       photo: '',
       category: '',
+      sizes: []
     })
   },
   loading: {
     type: Boolean,
     required: true
   }
-})
+});
+
+const selectedSize = ref(null);
 </script>

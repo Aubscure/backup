@@ -24,18 +24,15 @@
                 <div class="text-wrap">{{ previewProductData.name || state.data.name }}</div>
                 <div class="flex items-start">{{ previewProductData.price || state.data.price }}</div>
               </div>
-              <div class="flex justify-end text-lg">In Stock: {{ previewProductData.quantity || state.data.quantity }}</div>
               <div class="text-lg font-light text-justify">{{ previewProductData.description || state.data.description }}</div>
             </div>
           </div>
         </div>
         <div id="input box" class="bg-gray-800 rounded-lg ring-1 ring-gray-700">
           <div v-if="state.products" class="flex flex-col h-auto p-4 space-y-5">
-            <!-- <label class="self-center my-4 text-lg font-medium text-gray-100">Update Product</label> -->
             <input v-model="state.data.name" @input="updatePreview" type="text" name="product name" class="h-10 px-3 py-2 rounded-lg" :placeholder="state.data.name">
             <textarea v-model="state.data.description" @input="updatePreview" name="description" cols="30" rows="10" class="px-3 py-2 rounded-lg h-28" :placeholder="state.data.description"></textarea>
             <div class="flex justify-center space-x-4">
-              <input v-model.number="state.data.quantity" @input="updatePreview" type="number" :placeholder="state.data.quantity" class="p-2 border-2 rounded-lg input hover:border-gray-700" />
               <input v-model.number="state.data.price" @input="updatePreview" type="number" :placeholder="state.data.price" class="p-2 border-2 rounded-lg input hover:border-gray-700" />
               <select v-model="state.data.category" class="p-2 border-2 border-gray-400 rounded-lg input hover:border-gray-700">
                 <option value="" disabled selected>Select Category</option>
@@ -44,6 +41,23 @@
                 <option value="IT">IT</option>
               </select>
             </div>
+            <!-- Sizes and Quantities -->
+            <div v-for="(size, index) in state.data.sizes" :key="index" class="flex space-x-2">
+              <select v-model="size.size" class="p-2 border-2 border-gray-400 rounded-lg input hover:border-gray-700">
+                <!-- Options for sizes -->
+                <option value="" disabled selected>Select Size</option>
+                <option value="XSM">XSM</option>
+                <option value="SM">SM</option>
+                <option value="M">M</option>
+                <option value="L">L</option>
+                <option value="XL">XL</option>
+                <option value="XXL">XXL</option>
+              </select>
+              <input type="number" v-model="size.quantity" placeholder="Quantity" class="p-2 border-2 border-gray-400 rounded-lg input hover:border-gray-700" />
+              <button type="button" @click="removeSize(index)" class="p-2 text-white bg-red-600 rounded-lg btn hover:bg-red-500">Remove</button>
+            </div>
+            <button type="button" @click="addSize" class="p-2 text-white bg-green-600 rounded-lg btn hover:bg-green-500">Add Size</button>
+            <!-- End Sizes and Quantities -->
             <!-- Modern drag-and-drop file input -->
             <div 
               @dragover.prevent 
@@ -89,10 +103,10 @@ const state = reactive({
   data: {
     name: null,
     description: null,
-    quantity: null,
     price: null,
     photo: null,
     category: null,
+    sizes: [{ size: '', quantity: '' }]
   }
 })
 
@@ -119,6 +133,13 @@ function handleFileDrop(event) {
 
 function triggerFileInput() {
   fileInput.value.click();
+}
+const addSize = () => {
+  state.data.sizes.push({ size: '', quantity: '' });
+}
+
+const removeSize = (index) => {
+  state.data.sizes.splice(index, 1);
 }
 
 async function fetchProductDetails(id) {
@@ -162,7 +183,6 @@ const updatePreview = () => {
   previewProductData.value = {
     name: state.data.name,
     description: state.data.description,
-    quantity: state.data.quantity,
     price: state.data.price,
     category: state.data.category,
     photo: state.data.photo ? (state.data.photo instanceof File ? URL.createObjectURL(state.data.photo) : state.data.photo) : null
@@ -181,9 +201,9 @@ const updateProduct = async () => {
       body: JSON.stringify({
         name: state.data.name,
         description: state.data.description,
-        quantity: state.data.quantity,
         price: state.data.price,
-        category: state.data.category
+        category: state.data.category,
+        sizes: state.data.sizes
       })
     })
 

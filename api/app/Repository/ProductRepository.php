@@ -11,7 +11,7 @@ class ProductRepository implements ProductRepositoryInterface
 {
     public function getAll()
     {
-        return Product::paginate(200);
+        return Product::with('sizes')->paginate(200);
     }
 
     public function getById(int $id)
@@ -25,7 +25,6 @@ class ProductRepository implements ProductRepositoryInterface
         $product->name = $data->name;
         $product->description = $data->description;
         $product->price = $data->price;
-        $product->quantity = $data->quantity;
         $product->category = $data->category;
 
         if (isset($data->photo) && $data->photo instanceof UploadedFile) {
@@ -39,8 +38,18 @@ class ProductRepository implements ProductRepositoryInterface
             }
         }
 
-        $product->save();
+            // Save sizes if provided
+            $product->save();
 
+            // Save sizes if provided
+            if (isset($data->sizes) && is_array($data->sizes)) {
+                foreach ($data->sizes as $size) {
+                    $product->sizes()->create([
+                        'size' => $size['size'], // Access size from the array
+                        'quantity' => $size['quantity'] // Access quantity from the array
+                    ]);
+                }
+            }
         return $product->fresh();
     }
 
@@ -50,8 +59,24 @@ class ProductRepository implements ProductRepositoryInterface
         $product->name = $data->name;
         $product->description = $data->description;
         $product->price = $data->price;
-        $product->quantity = $data->quantity;
         $product->category = $data->category;
+
+        // Save sizes if provided
+        if (isset($data->sizes) && is_array($data->sizes)) {
+            // Remove sizes associated with the product that are not present in the updated data
+            $currentSizes = $product->sizes()->pluck('size')->toArray();
+            $updatedSizes = array_column($data->sizes, 'size');
+            $sizesToRemove = array_diff($currentSizes, $updatedSizes);
+            $product->sizes()->whereIn('size', $sizesToRemove)->delete();
+
+            // Update existing sizes and add new sizes
+            foreach ($data->sizes as $size) {
+                $product->sizes()->updateOrCreate(
+                    ['size' => $size['size']],
+                    ['quantity' => $size['quantity']]
+                );
+            }
+        }
 
         $product->save();
 
@@ -74,5 +99,4 @@ class ProductRepository implements ProductRepositoryInterface
 
         return $product;
     }
-
 }
