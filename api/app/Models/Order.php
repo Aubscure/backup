@@ -12,13 +12,17 @@ class Order extends Model
 
     protected $fillable = [
         'customer_id',
-        'order_date',
         'total_price',
         'payment_method',
         'order_status',
     ];
 
     protected $dates = ['deleted_at'];
+
+    protected $attributes = [
+        'payment_method' => 'cashier', // Default value for payment_method
+        'order_status' => 'pending', // Default value for order_status
+    ];
 
     public function orderDetails()
     {

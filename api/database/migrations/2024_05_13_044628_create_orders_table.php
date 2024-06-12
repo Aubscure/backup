@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreign('customer_id')->references('id')->on('customers')->onDelete('set null');
             $table->timestamp('order_date');
             $table->decimal('total_price', 10, 2);
-            $table->string('payment_method');
+            $table->string('payment_method')->default('cashier'); // Set default value for payment_method
             $table->enum('order_status', ['pending', 'processing', 'completed'])->default('pending');
             $table->softDeletes();
             $table->timestamps();
@@ -36,3 +36,4 @@ return new class extends Migration
         Schema::dropIfExists('orders');
     }
 };
+

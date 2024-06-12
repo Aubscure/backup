@@ -4,28 +4,30 @@
     :back-text="'Products'"
     :product="product"
     :loading="loading"
+    :addToCart="addToCart"
   />
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 
 definePageMeta({
   layout: 'client'
 })
 
-const route = useRoute()
+const router = useRouter()
+const { id } = useRoute().params
 const product = ref({
   id: '',
-  title: '',
+  name: '',
   description: '',
   price: 0,
-  photo: ''
+  photo: '',
+  category: '',
+  sizes: []
 })
 const loading = ref(true)
-const router = useRouter()
-const { id } = route.params
 
 const fetchProduct = async () => {
   loading.value = true
@@ -50,6 +52,29 @@ const fetchProduct = async () => {
   } finally {
     loading.value = false
   }
+}
+
+const addToCart = (productId, selectedSize) => {
+  const itemToAdd = {
+    id: productId,
+    title: product.value.name,
+    description: product.value.description,
+    price: product.value.price,
+    image: product.value.photo,
+    size: selectedSize, // Add the selected size to the cart item
+    quantity: 1 // Initial quantity
+  }
+  
+  // Get existing cart items from localStorage
+  const existingCartItems = JSON.parse(localStorage.getItem('cart')) || [];
+  
+  // Add the new item to the existing items
+  existingCartItems.push(itemToAdd);
+
+  console.log("Item Added", itemToAdd)
+  
+  // Store the updated cart items back to localStorage
+  localStorage.setItem('cart', JSON.stringify(existingCartItems));
 }
 
 onMounted(fetchProduct)

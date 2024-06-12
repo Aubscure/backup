@@ -34,7 +34,9 @@
             :disabled="!selectedSize" 
             label="Add to Cart" 
             icon="i-bi-cart-plus"
+            @click="addToCart(product.id, selectedSize)"
           />
+
           <UButton 
             class="rounded" 
             :disabled="!selectedSize" 
@@ -76,8 +78,13 @@ const props = defineProps({
   loading: {
     type: Boolean,
     required: true
+  },
+  addToCart: {
+    type: Function,
+    required: true
   }
 });
 
 const selectedSize = ref(null);
+
 </script>
