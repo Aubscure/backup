@@ -31,7 +31,7 @@
                     </table>
                     <div class="flex justify-end mt-4 space-x-4">
                         <!-- Cancel button (cancels order) -->
-                        <button @click="confirmCancelOrder" class="px-4 py-2 text-white bg-red-500 rounded hover:bg-red-600">Cancel order</button>
+                        <button @click="confirmCancelOrder" class="px-4 py-2 text-white bg-red-500 rounded hover:bg-red-600">Cancel Order</button>
                         <!-- Paid button -->
                         <button @click="markAsPaid" class="px-4 py-2 text-white bg-green-500 rounded hover:bg-green-600">Mark as Paid</button>
                     </div>
@@ -140,11 +140,9 @@
     const confirmCancelOrder = () => {
         if (window.confirm("Are you sure you want to cancel this order?")) {
             deleteOrder();
-            location.reload();
         }
-        
     };
-
+    
     const markAsPaid = () => {
         updateOrderStatus('completed');
     };

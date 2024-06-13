@@ -17,7 +17,7 @@
           <button @click="nextPage" :disabled="currentPage === totalPages" class="relative inline-flex items-center px-4 py-2 ml-3 font-bold text-gray-100 transition-colors duration-300 ease-in-out bg-indigo-600 rounded hover:bg-indigo-500">Next</button>
         </div>
       </nav>
-      <div v-else class="flex items-center justify-between px-4 py-3 bg-gray-900 border-t border-gray-600 sm:px-6 lg:mt-4" aria-label="Pagination">
+      <div v-else class="flex items-center justify-between px-4 py-3 bg-transparent border-t border-gray-600 sm:px-6 lg:mt-4" aria-label="Pagination">
         <div class="hidden sm:block">
           <p class="text-sm text-gray-200">
             Showing

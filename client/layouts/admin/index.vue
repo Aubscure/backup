@@ -130,7 +130,7 @@
                 </div>
             </div>
 
-            <main :class="{ '': !sidebarOpen }">
+            <main :class="{ '': !sidebarOpen }" class="mb-20">
                 <div class="px-4 py-10 sm:px-6 lg:px-8 lg:py-6">
                     <slot />
                 </div>
@@ -139,7 +139,7 @@
     </div>  
 
 
-        <footer class="relative bg-grey-900 ring-1 ring-gray-700 lg:ml-52" aria-labelledby="footer-heading">
+        <footer class="relative mt-50 bg-grey-900 ring-1 ring-gray-700 lg:ml-52" aria-labelledby="footer-heading">
             <h2 id="footer-heading" class="sr-only">Footer</h2>
             <div class="px-6 pt-8 pb-8 mx-auto max-w-7xl sm:pt-24 lg:px-8 lg:pt-32">
                 <div class="xl:grid xl:grid-cols-3 xl:gap-8">

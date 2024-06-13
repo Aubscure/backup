@@ -74,6 +74,7 @@
       :isActive="isModalActive" 
       :orderId="selectedOrderId" 
       @close="isModalActive = false"
+      class="fixed inset-0 z-50 flex items-center justify-center"
     />
   </div>
 </template>
