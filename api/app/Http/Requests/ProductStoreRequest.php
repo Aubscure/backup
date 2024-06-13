@@ -17,12 +17,13 @@ class ProductStoreRequest extends FormRequest
         return [
             'name' => 'required|string',
             'description' => 'nullable|string',
-            'price' => 'required|numeric',
-            'photo' => 'nullable',
+            'price' => 'required|numeric|min:0', // Adjusted to allow numeric values, including decimals
+            'photo' => 'required',
             'category' => 'required|in:HM,TM,IT',
-            'sizes' => 'nullable|array', // Validate that sizes is an array
-            'sizes.*.size' => 'required|in:XSM,SM,M,L,XL,XXL', // Validate each size
-            'sizes.*.quantity' => 'required|integer|min:0', // Validate each quantity
+            'sizes' => 'required|array',
+            'sizes.*.size' => 'required|in:XSM,SM,M,L,XL,XXL',
+            'sizes.*.quantity' => 'required|integer|min:0',
         ];
     }
+
 }

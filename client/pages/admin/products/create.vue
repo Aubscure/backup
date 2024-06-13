@@ -32,6 +32,7 @@
                 placeholder="Name" 
                 class="p-2 border-2 border-gray-400 rounded-lg textb input hover:border-gray-700" 
                 v-model="state.data.name" 
+                required
               />
               <textarea 
                 placeholder="Description" 
@@ -39,10 +40,11 @@
                 v-model="state.data.description">
               </textarea>
               <input 
-                type="number" 
+                type="text" 
                 placeholder="Price" 
                 class="p-2 border-2 border-gray-400 rounded-lg input hover:border-gray-700" 
                 v-model="state.data.price" 
+                required
               />
               <div v-for="(size, index) in state.data.sizes" :key="index" class="flex space-x-2">
                 <select v-model="size.size" class="p-2 border-2 border-gray-400 rounded-lg input hover:border-gray-700">
@@ -54,14 +56,14 @@
                   <option value="XL">XL</option>
                   <option value="XXL">XXL</option>
                 </select>
-                <input type="number" v-model="size.quantity" placeholder="Quantity" class="p-2 border-2 border-gray-400 rounded-lg input hover:border-gray-700" />
+                <input type="number" v-model="size.quantity" placeholder="Quantity" class="p-2 border-2 border-gray-400 rounded-lg input hover:border-gray-700" required/>
                 <button type="button" @click="removeSize(index)" class="p-2 text-white bg-red-600 rounded-lg btn hover:bg-red-500">Remove</button>
               </div>
               <button type="button" @click="addSize" class="p-2 text-white bg-green-600 rounded-lg btn hover:bg-green-500">Add Size</button>
               
 
                             <!-- Dropdown menu for category selection -->
-              <select v-model="state.data.category" class="p-2 border-2 border-gray-400 rounded-lg input hover:border-gray-700">
+              <select v-model="state.data.category" class="p-2 border-2 border-gray-400 rounded-lg input hover:border-gray-700" required>
                 <option value="" disabled selected>Select Category</option>
                 <option value="HM">HM</option>
                 <option value="TM">TM</option>
@@ -82,8 +84,6 @@
       </div>
     </div>
   </div>
-
-  
 </template>
 
 
@@ -103,12 +103,12 @@ const state = reactive({
   errors: null,
   loading: false,
   data: {
-    name: null,
-    description: null,
-    price: null,
+    name: '',  
+    description: '',  
+    price: '',  
     photo: null,
-    category: null,
-    sizes: [{ size: '', quantity: '' }],
+    category: '',  
+    sizes: [{ size: '', quantity: '' }], 
   }
 });
 
@@ -141,8 +141,8 @@ function removeSize(index) {
 async function handleSubmit() {
   state.loading = true;
   state.errors = null;
-
-  if (!state.data.name || !state.data.description || !state.data.price || !state.data.photo) {
+  
+  if (!state.data.name || !state.data.price || !state.data.photo || !state.data.category || state.data.sizes.some(size => !size.size || !size.quantity)) {
     state.errors = "All fields are required.";
     state.loading = false;
     show.value = true;
@@ -154,7 +154,7 @@ async function handleSubmit() {
     const formData = new FormData();
     formData.append('name', state.data.name);
     formData.append('description', state.data.description);
-    formData.append('price', state.data.price);
+    formData.append('price', parseFloat(state.data.price));
     formData.append('photo', state.data.photo);
     formData.append('category', state.data.category);
     state.data.sizes.forEach((size, index) => {
