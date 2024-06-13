@@ -1,6 +1,6 @@
 <template>
     <div v-if="isActive" class="fixed inset-0 z-50 flex items-center justify-center bg-transparent">
-        <div class="w-3/4 max-w-3xl bg-gray-700 rounded-lg shadow-lg">
+        <div class="w-3/4 max-w-3xl bg-gray-700 rounded-lg shadow-lg shadow-gray-900">
             <div class="px-6 py-4 border-b border-gray-200">
                 <h3 class="text-lg font-medium text-gray-100">Order Details</h3>
                 <button @click="closeModal" class="float-right text-gray-100 hover:text-gray-600">×</button>

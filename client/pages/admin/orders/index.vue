@@ -1,5 +1,5 @@
 <template>
-  <div class="container p-4 mx-auto">
+  <div class="container p-4 mx-auto bg-gray-800 rounded-lg shadow-md shadow-gray-950">
     <h1 class="mb-6 text-3xl font-bold text-gray-200">Orders</h1>
 
     <!-- Tabs for order status -->
@@ -27,22 +27,22 @@
     <Spinner v-if="loading" :is-active="loading" class="min-h-60"/>
 
     <div v-else-if="totalOrders > 0">
-      <table class="min-w-full divide-y divide-gray-600">
-        <thead class="text-xs font-medium text-left text-gray-200 bg-gray-800">
-          <tr>
-            <th scope="col" class="px-6 py-3 tracking-wider uppercase">Customer Name</th>
-            <th scope="col" class="px-6 py-3 tracking-wider uppercase">Date</th>
-            <th scope="col" class="px-6 py-3 tracking-wider uppercase">Total Price</th>
-            <th scope="col" class="px-6 py-3 tracking-wider uppercase">Status</th>
-            <th scope="col" class="px-6 py-3 tracking-wider uppercase">Action</th>
+      <table class="min-w-full overflow-hidden divide-y divide-gray-600 rounded-lg shadow-md shadow-gray-900">
+        <thead class="text-lg text-left text-gray-200 bg-gray-700 bg-opacity-50">
+          <tr class="">
+            <th scope="col" class="px-6 py-6 tracking-wider uppercase">Customer Name</th>
+            <th scope="col" class="px-6 py-6 tracking-wider uppercase">Date</th>
+            <th scope="col" class="px-6 py-6 tracking-wider uppercase">Total Price</th>
+            <th scope="col" class="px-6 py-6 tracking-wider uppercase">Status</th>
+            <th scope="col" class="px-6 py-6 tracking-wider uppercase">Action</th>
           </tr>
         </thead>
-        <tbody class="text-gray-200 bg-gray-800 divide-y divide-gray-600">
+        <tbody class="text-gray-200 bg-gray-700 bg-opacity-50 divide-y divide-gray-600 ">
           <tr v-for="order in paginatedOrders" :key="order.id">
-            <td class="px-6 py-4 text-sm whitespace-nowrap">{{ getCustomerName(order.customer_id) }}</td>
-            <td class="px-6 py-4 text-sm whitespace-nowrap">{{ order.order_date }}</td>
-            <td class="px-6 py-4 text-sm whitespace-nowrap">₱{{ order.total_price }}</td>
-            <td class="px-6 py-4 text-sm whitespace-nowrap">
+            <td class="px-6 py-3 text-lg whitespace-nowrap">{{ getCustomerName(order.customer_id) }}</td>
+            <td class="px-6 py-3 text-sm whitespace-nowrap">{{ order.order_date }}</td>
+            <td class="px-6 py-3 text-sm whitespace-nowrap">₱{{ order.total_price }}</td>
+            <td class="px-6 py-3 text-sm whitespace-nowrap">
               <span 
                 :class="[
                   'font-semibold',
@@ -77,6 +77,7 @@
     />
   </div>
 </template>
+
 
 <script setup>
   definePageMeta({

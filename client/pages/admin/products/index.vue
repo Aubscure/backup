@@ -1,6 +1,6 @@
 <template>
   <div class="grid-cols-2 scrollbar-hide">
-    <div class="flex items-center justify-center bg-gray-900">
+    <div class="flex items-center justify-center pb-10 bg-gray-800 rounded-lg shadow-md shadow-gray-950">
       <div class="container px-4 mx-auto">
         <div class="flex items-center py-10">
           <div>
@@ -16,7 +16,7 @@
           <Spinner :is-active="true" />
         </div>
         <div v-else-if="currentproducts.length" class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          <div v-for="product in currentproducts" :key="product.id" class="flex flex-col p-4 bg-gray-800 rounded-lg shadow-md shadow-gray-950">
+          <div v-for="product in currentproducts" :key="product.id" class="flex flex-col p-4 bg-gray-700 rounded-lg shadow-md shadow-gray-900">
             <div>
               <img :src="getFullImageUrl(product.photo)" alt="Product Image" class="object-cover w-full h-32 rounded">
             </div>

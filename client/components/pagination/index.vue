@@ -1,6 +1,6 @@
 <template>
     <div>
-      <nav v-if="totalItems > 0" class="flex items-center justify-between px-4 py-3 bg-gray-900 border-t border-gray-600 sm:px-6 lg:mt-4" aria-label="Pagination">
+      <nav v-if="totalItems > 0" class="flex items-center justify-between px-4 py-3 bg-transparent border-t border-gray-600 sm:px-6 lg:mt-4" aria-label="Pagination">
         <div class="hidden sm:block">
           <p class="text-sm text-gray-200">
             Showing
