@@ -149,6 +149,7 @@
 
     const closeModal = () => {
         emit('close');
+        window.location.reload();
     };
 
     watch(() => props.isActive, (newValue) => {
