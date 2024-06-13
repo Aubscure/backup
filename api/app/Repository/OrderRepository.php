@@ -54,14 +54,17 @@ class OrderRepository implements OrderRepositoryInterface
     public function update(object $data, int $id)
     {
         $order = Order::findOrFail($id);
-        $order->customer_id = $data->customer_id;
-        $order->total_price = $data->total_price;
-        $order->payment_method = $data->payment_method;
-        $order->order_status = $data->order_status;
-        $order->save();
+        if (isset($data->order_status) && in_array($data->order_status, ['completed'])) {
+            $order->order_status = $data->order_status;
 
-        return $order->fresh();
+            $order->save();
+
+            return $order->fresh();
+        }
+
+        return null; // Handle invalid status or other error scenarios
     }
+
 
     public function delete(int $id)
     {
