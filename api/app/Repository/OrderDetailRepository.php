@@ -13,9 +13,9 @@ class OrderDetailRepository implements OrderDetailRepositoryInterface
         return OrderDetail::paginate(20);
     }
 
-    public function getById(int $id)
+    public function getByOrderId(int $orderId)
     {
-        return OrderDetail::findOrFail($id);
+        return OrderDetail::where('order_id', $orderId)->get();
     }
 
     public function create(object $data)
@@ -25,7 +25,7 @@ class OrderDetailRepository implements OrderDetailRepositoryInterface
         $order_detail->product_id = $data->product_id;
         $order_detail->quantity = $data->quantity;
         $order_detail->unit_price = $data->unit_price;
-        $order_detail->subtotal = $data->subtotal;
+        $order_detail->total_price = $data->total;
         $order_detail->save();
 
         return $order_detail->fresh();
@@ -38,7 +38,7 @@ class OrderDetailRepository implements OrderDetailRepositoryInterface
         $order_detail->product_id = $data->product_id;
         $order_detail->quantity = $data->quantity;
         $order_detail->unit_price = $data->unit_price;
-        $order_detail->subtotal = $data->subtotal;
+        $order_detail->total_price = $data->total;
         $order_detail->save();
 
         return $order_detail->fresh();

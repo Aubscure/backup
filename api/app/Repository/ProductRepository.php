@@ -17,6 +17,7 @@ class ProductRepository implements ProductRepositoryInterface
     public function getById(int $id)
     {
         return Product::findOrFail($id);
+
     }
 
     public function create(object $data)

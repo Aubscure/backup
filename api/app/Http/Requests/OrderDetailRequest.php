@@ -28,7 +28,7 @@ class OrderDetailRequest extends FormRequest
             'product_id' => 'required|exists:products,id',
             'quantity' => 'required|numeric|min:1',
             'unit_price' => 'required|numeric|min:0',
-            'subtotal' => 'required|numeric|min:0',
+            'total' => 'required|numeric|min:0',
         ];
     }
 }

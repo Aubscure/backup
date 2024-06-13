@@ -4,7 +4,8 @@ namespace App\Repository;
 
 use App\Interface\Repository\OrderRepositoryInterface;
 use App\Models\Order;
-use App\Models\Customer; // Add this line
+use App\Models\Customer;
+use App\Models\OrderDetail;
 use Illuminate\Http\Response;
 
 class OrderRepository implements OrderRepositoryInterface
@@ -32,19 +33,23 @@ class OrderRepository implements OrderRepositoryInterface
         $order = new Order();
         $order->customer_id = $customer->id;
         $order->total_price = $data->total_price;
-
-        // Check if payment_method is provided, otherwise use default
         $order->payment_method = isset($data->payment_method) ? $data->payment_method : 'cashier';
-
-        // Check if order_status is provided, otherwise use default
         $order->order_status = isset($data->order_status) ? $data->order_status : 'pending';
-
         $order->save();
+
+        // Create order details
+        foreach ($data->order_details as $detail) {
+            $orderDetail = new OrderDetail();
+            $orderDetail->order_id = $order->id;
+            $orderDetail->product_id = $detail['product_id'];
+            $orderDetail->quantity = $detail['quantity'];
+            $orderDetail->unit_price = $detail['unit_price'];
+            $orderDetail->total = $detail['total'];
+            $orderDetail->save();
+        }
 
         return $order->fresh();
     }
-
-
 
     public function update(object $data, int $id)
     {

@@ -54,7 +54,7 @@
               </span>
             </td>
             <td class="px-6 py-4 text-sm whitespace-nowrap">
-              <nuxt-link :to="`/admin/orders/${order.id}`" class="text-indigo-200 hover:text-indigo-400">View Order</nuxt-link>
+              <button @click="viewOrderDetails(order.id)" class="text-indigo-200 hover:text-indigo-400">View Order</button>
             </td>
           </tr>
         </tbody>
@@ -70,6 +70,11 @@
       @prevPage="previousPage"
       @nextPage="nextPage"
     />
+    <OrderDetailsModal 
+      :isActive="isModalActive" 
+      :orderId="selectedOrderId" 
+      @close="isModalActive = false"
+    />
   </div>
 </template>
 
@@ -77,20 +82,23 @@
   definePageMeta({
     layout: 'admin'
   });
-import { ref, reactive, computed, onMounted } from 'vue'
+import { ref, reactive, computed, onMounted } from 'vue';
 import EmptyState from '~/components/form/EmptyState.vue';
 import Spinner from '~/components/loading/Spinner.vue';
+import OrderDetailsModal from '~/components/orderdetail.vue';
 
-const orders = ref([])
-const customers = ref([])
-const loading = ref(true)
-const activeTab = ref('all')
+const orders = ref([]);
+const customers = ref([]);
+const loading = ref(true);
+const activeTab = ref('all');
+const isModalActive = ref(false);
+const selectedOrderId = ref(null);
 
 const state = reactive({
   errors: null,
   currentPage: 1,
   itemsPerPage: 8,
-})
+});
 
 const fetchOrders = async () => {
   try {
@@ -99,18 +107,18 @@ const fetchOrders = async () => {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${localStorage.getItem('_token')}`
       }
-    })
+    });
     if (!response.ok) {
-      throw new Error('Failed to fetch orders')
+      throw new Error('Failed to fetch orders');
     }
-    const data = await response.json()
-    orders.value = data.data
+    const data = await response.json();
+    orders.value = data.data;
   } catch (error) {
-    console.error('Error fetching orders:', error)
+    console.error('Error fetching orders:', error);
   } finally {
-    loading.value = false
+    loading.value = false;
   }
-}
+};
 
 const fetchCustomers = async () => {
   try {
@@ -119,41 +127,40 @@ const fetchCustomers = async () => {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${localStorage.getItem('_token')}`
       }
-    })
+    });
     if (!response.ok) {
-      throw new Error('Failed to fetch customers')
+      throw new Error('Failed to fetch customers');
     }
-    const data = await response.json()
-    customers.value = data.data
+    const data = await response.json();
+    customers.value = data.data;
     console.log(customers.value); // Add this line to log customer data
   } catch (error) {
-    console.error('Error fetching customers:', error)
+    console.error('Error fetching customers:', error);
   } finally {
-    loading.value = false
+    loading.value = false;
   }
-}
-
+};
 
 const filteredOrders = computed(() => {
   if (activeTab.value === 'all') {
-    return orders.value
+    return orders.value;
   }
-  return orders.value.filter(order => order.order_status.toLowerCase() === activeTab.value)
-})
+  return orders.value.filter(order => order.order_status.toLowerCase() === activeTab.value);
+});
 
 const paginatedOrders = computed(() => {
-  const start = (state.currentPage - 1) * state.itemsPerPage
-  const end = start + state.itemsPerPage
-  return filteredOrders.value.slice(start, end)
-})
+  const start = (state.currentPage - 1) * state.itemsPerPage;
+  const end = start + state.itemsPerPage;
+  return filteredOrders.value.slice(start, end);
+});
 
-const totalOrders = computed(() => filteredOrders.value.length)
-const startRecord = computed(() => (state.currentPage - 1) * state.itemsPerPage + 1)
-const endRecord = computed(() => Math.min(state.currentPage * state.itemsPerPage, totalOrders.value))
+const totalOrders = computed(() => filteredOrders.value.length);
+const startRecord = computed(() => (state.currentPage - 1) * state.itemsPerPage + 1);
+const endRecord = computed(() => Math.min(state.currentPage * state.itemsPerPage, totalOrders.value));
 
 const formattedStatus = (status) => {
   return status.charAt(0).toUpperCase() + status.slice(1).toLowerCase();
-}
+};
 
 const getCustomerName = (customerId) => {
   const customer = customers.value.find(c => c.id === customerId);
@@ -162,28 +169,31 @@ const getCustomerName = (customerId) => {
   } else {
     return 'Unknown';
   }
-}
-
-
+};
 
 const previousPage = () => {
   if (state.currentPage > 1) {
-    state.currentPage--
+    state.currentPage--;
   }
-}
+};
 
 const nextPage = () => {
   if (endRecord.value < totalOrders.value) {
-    state.currentPage++
+    state.currentPage++;
   }
-}
+};
+
+const viewOrderDetails = (orderId) => {
+  selectedOrderId.value = orderId;
+  isModalActive.value = true;
+};
 
 onMounted(() => {
-  fetchOrders()
-  fetchCustomers()
-})
+  fetchOrders();
+  fetchCustomers();
+});
 </script>
 
 <style scoped>
-
+/* Add necessary styles here */
 </style>

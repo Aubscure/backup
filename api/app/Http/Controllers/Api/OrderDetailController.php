@@ -28,9 +28,9 @@ class OrderDetailController extends Controller
         return $this->orderDetailService->createOrderDetail($request);
     }
 
-    public function show(int $id)
+    public function show(int $orderId)
     {
-        return $this->orderDetailService->getOrderDetailById($id);
+        return $this->orderDetailService->getOrderDetailByOrderId($orderId);
     }
 
     public function update(OrderDetailUpdateRequest $request, int $id)

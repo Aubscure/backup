@@ -15,7 +15,7 @@ class OrderDetail extends Model
         'product_id',
         'quantity',
         'unit_price',
-        'subtotal',
+        'total',
     ];
 
     protected $dates = ['deleted_at'];
@@ -28,5 +28,16 @@ class OrderDetail extends Model
     public function product()
     {
         return $this->belongsTo(Product::class);
+    }
+        // Accessor for total_price
+    public function getTotalPriceAttribute()
+    {
+        return $this->attributes['total'];
+    }
+
+    // Mutator for total_price
+    public function setTotalPriceAttribute($value)
+    {
+        $this->attributes['total'] = $value;
     }
 }

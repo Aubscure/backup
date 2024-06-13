@@ -39,33 +39,28 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue';
-import ModalComponent from './../../../components/Client/customer.vue';
+import ModalComponent from '~/components/Client/customer.vue';
 
 definePageMeta({
   layout: 'client'
 });
 
-// Define reactive variables
 const items = ref([]);
 const isModalVisible = ref(false);
 
-// Function to parse price as a number
 const parsePrice = (price) => {
   return parseFloat(price.replace(/[^0-9.-]+/g, ""));
 }
 
-// Calculate total
 const total = computed(() => {
   return items.value.reduce((acc, item) => acc + (parsePrice(item.price) * item.quantity), 0).toFixed(2);
 });
 
-// Fetch cart items from localStorage on component mount
 onMounted(() => {
   const storedItems = JSON.parse(localStorage.getItem('cart')) || [];
   items.value = storedItems;
 });
 
-// Functions to control the modal
 const openModal = () => {
   isModalVisible.value = true;
 };
@@ -76,6 +71,14 @@ const closeModal = () => {
 
 const handleSave = (details) => {
   console.log('Details saved:', details);
-  // Implement further actions after saving details, e.g., process the purchase
+  // Clear items after saving
+  items.value = [];
+  // Update local storage to reflect the cleared cart
+  updateLocalStorage();
+};
+
+const updateLocalStorage = () => {
+  localStorage.setItem('cart', JSON.stringify(items.value));
 };
 </script>
+

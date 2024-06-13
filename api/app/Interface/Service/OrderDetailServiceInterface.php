@@ -6,7 +6,7 @@ interface OrderDetailServiceInterface
 {
     public function getAllOrderDetails();
 
-    public function getOrderDetailById(int $id);
+    public function getOrderDetailByOrderId(int $orderId);
 
     public function createOrderDetail(object $data);
 

@@ -33,10 +33,10 @@ Route::middleware('auth:sanctum')->group(function () {
     // Order Details routes
     Route::prefix('OrderDetails')->group(function () {
         Route::get('/', [OrderDetailController::class, 'index']);
-        Route::get('/{id}', [OrderDetailController::class, 'show']);
         Route::post('/', [OrderDetailController::class, 'store']);
         Route::patch('/{id}', [OrderDetailController::class, 'update']);
         Route::delete('/{id}', [OrderDetailController::class, 'destroy']);
+        Route::get('/order/{orderId}', [OrderDetailController::class, 'show']);
     });
 
     // Products routes

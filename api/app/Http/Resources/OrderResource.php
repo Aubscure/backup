@@ -15,9 +15,9 @@ class OrderResource extends JsonResource
             'customer_last_name' => $this->customer->last_name,
             'customer_id_number' => $this->customer->id_number,
             'total_price' => $this->total_price,
-            'payment_method' => $this->payment_method ?? 'cashier', // Provide default value if null
-            'order_status' => $this->order_status ?? 'pending', // Provide default value if null
-            'order_details' => $this->orderDetails,
+            'payment_method' => $this->payment_method ?? 'cashier',
+            'order_status' => $this->order_status ?? 'pending',
+            'order_details' => OrderDetailResource::collection($this->orderDetails),
         ];
     }
 }

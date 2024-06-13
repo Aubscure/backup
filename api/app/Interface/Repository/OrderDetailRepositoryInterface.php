@@ -6,7 +6,7 @@ interface OrderDetailRepositoryInterface
 {
     public function getAll();
 
-    public function getById(int $id);
+    public function getByOrderId(int $id);
 
     public function create(object $data);
 

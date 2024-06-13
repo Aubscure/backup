@@ -18,8 +18,13 @@ class OrderStoreRequest extends FormRequest
             'customer_last_name' => 'required|string',
             'customer_id_number' => 'required|string',
             'total_price' => 'required|numeric',
-            'payment_method' => 'nullable|string|in:cashier,credit_card', // Update with accepted values
-            'order_status' => 'nullable|string|in:pending,processing,completed', // Update with accepted values
+            'payment_method' => 'nullable|string|in:cashier,credit_card',
+            'order_status' => 'nullable|string|in:pending,processing,completed',
+            'order_details' => 'required|array',
+            'order_details.*.product_id' => 'required|integer|exists:products,id',
+            'order_details.*.quantity' => 'required|integer',
+            'order_details.*.unit_price' => 'required|numeric',
+            'order_details.*.total' => 'required|numeric',
         ];
     }
 
