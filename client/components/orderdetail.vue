@@ -11,7 +11,14 @@
                 </template>
                 <template v-else>
                     <table class="min-w-full divide-y divide-gray-200">
-                        <!-- Table headers -->
+                        <thead>
+                            <tr>
+                                <th class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-100 uppercase">Product Name</th>
+                                <th class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-100 uppercase">Quantity</th>
+                                <th class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-100 uppercase">Unit Price</th>
+                                <th class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-100 uppercase">Total</th>
+                            </tr>
+                        </thead>
                         <tbody class="text-gray-100 divide-y divide-gray-200">
                             <!-- Table rows for order details -->
                             <tr v-for="detail in orderDetails" :key="detail.id">

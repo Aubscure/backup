@@ -103,7 +103,7 @@ const state = reactive({
   data: {
     name: null,
     description: null,
-    price: null,
+    price: '', // Set a default value here
     photo: null,
     category: null,
     sizes: [{ size: '', quantity: '' }]
@@ -201,7 +201,7 @@ const updateProduct = async () => {
       body: JSON.stringify({
         name: state.data.name,
         description: state.data.description,
-        price: state.data.price,
+        price: parseFloat(state.data.price),
         category: state.data.category,
         sizes: state.data.sizes
       })
