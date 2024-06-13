@@ -22,10 +22,9 @@ class OrderDetailService implements OrderDetailServiceInterface
 
     public function getOrderDetailByOrderId(int $orderId)
     {
-        $orderDetail = $this->orderDetailRepository->getByOrderId($orderId);
-
-        return OrderDetailResource::collection($orderDetail);
+        return $this->orderDetailRepository->getByOrderId($orderId);
     }
+
 
     public function createOrderDetail(object $data)
     {

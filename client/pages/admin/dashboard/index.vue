@@ -1,12 +1,12 @@
 <template>
-    <div class="min-h-full lg:block lg:overflow-y-auto rounded-3xl scrollbar-hide ring-1 ring-gray-700">
-      <header class="shadow-sm shadow-gray-700 rounded-t-3xl">
-        <div class="px-4 py-6 mx-auto max-w-7xl sm:px-6 lg:px-8">
-          <h1 class="text-5xl font-bold tracking-tight text-gray-100">Dashboard</h1>
+    <div class="min-h-full bg-gray-800 shadow-lg lg:block lg:overflow-y-auto rounded-xl scrollbar-hide ring-1 ring-gray-800 shadow-gray-950">
+      <header class="">
+        <div class="px-4 py-5 mx-auto max-w-7xl sm:px-6 lg:px-8">
+          <h1 class="text-5xl font-semibold tracking-tight text-gray-100">Dashboard</h1>
         </div>
       </header>
-      <main class="grid-rows-2 px-48 py-6">
-        <div class="py-6 my-6 max-w-7xl sm:px-6 lg:px-8 ring-1 ring-gray-700 rounded-3xl bg-customDark">
+      <main class="grid-rows-2 px-48 pb-6">
+        <div class="py-6 my-6 bg-gray-700 bg-opacity-50 shadow-md max-w-7xl sm:px-6 lg:px-8 rounded-xl shadow-gray-950">
           <table class="w-full table-auto">
             <thead>
               <tr>
@@ -20,7 +20,7 @@
             </tbody>
           </table>
         </div>
-        <div class="justify-start max-w-sm py-6 my-6 sm:px-6 lg:px-8 ring-1 ring-gray-700 rounded-3xl bg-customDark">
+        <div class="justify-start max-w-sm py-6 my-6 bg-gray-700 bg-opacity-50 rounded-lg shadow-md shadow-gray-950 sm:px-6 lg:px-8">
             <table class="w-full table-auto">
                 <thead>
                     <tr>
@@ -34,8 +34,8 @@
                 </tbody>
             </table>
         </div>
-        <div>
-          <nuxt-link to="../kiosk/products" class="text-white">KIOSK</nuxt-link>
+        <div class="my-5">
+          <nuxt-link to="./../../kiosk/products" class="px-5 py-2 text-white bg-gray-700 bg-opacity-50 rounded-lg shadow-md shadow-gray-950 ">INITIALIZE KIOSK</nuxt-link>
         </div>
 
       </main>

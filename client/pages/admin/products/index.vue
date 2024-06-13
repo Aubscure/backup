@@ -16,7 +16,7 @@
           <Spinner :is-active="true" />
         </div>
         <div v-else-if="currentproducts.length" class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          <div v-for="product in currentproducts" :key="product.id" class="flex flex-col p-4 bg-gray-800 rounded-lg shadow-sm ring-1 ring-gray-700 shadow-gray-700">
+          <div v-for="product in currentproducts" :key="product.id" class="flex flex-col p-4 bg-gray-800 rounded-lg shadow-md shadow-gray-950">
             <div>
               <img :src="getFullImageUrl(product.photo)" alt="Product Image" class="object-cover w-full h-32 rounded">
             </div>
@@ -38,7 +38,7 @@
             </div>
               <div class="flex w-full mt-auto">
                 <nuxt-link :to="`/admin/products/${product.id}`">
-                  <button class="px-4 py-2 font-bold text-gray-100 transition-colors duration-300 ease-in-out bg-indigo-600 rounded hover:bg-indigo-500">
+                  <button class="px-4 py-2 font-bold text-gray-100 transition-colors duration-300 ease-in-out bg-indigo-800 rounded hover:bg-indigo-500">
                     Edit
                   </button>
                 </nuxt-link>

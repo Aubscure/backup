@@ -29,7 +29,8 @@ class OrderDetail extends Model
     {
         return $this->belongsTo(Product::class);
     }
-        // Accessor for total_price
+
+    // Accessor for total_price
     public function getTotalPriceAttribute()
     {
         return $this->attributes['total'];
@@ -39,5 +40,11 @@ class OrderDetail extends Model
     public function setTotalPriceAttribute($value)
     {
         $this->attributes['total'] = $value;
+    }
+
+    // Accessor for product_name
+    public function getProductNameAttribute()
+    {
+        return $this->product ? $this->product->name : null;
     }
 }

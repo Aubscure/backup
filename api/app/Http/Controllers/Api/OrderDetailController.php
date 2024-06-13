@@ -8,7 +8,6 @@ use App\Http\Requests\OrderDetailUpdateRequest;
 use App\Interface\Service\OrderDetailServiceInterface;
 use Illuminate\Http\JsonResponse;
 
-
 class OrderDetailController extends Controller
 {
     private $orderDetailService;

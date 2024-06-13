@@ -37,7 +37,9 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::patch('/{id}', [OrderDetailController::class, 'update']);
         Route::delete('/{id}', [OrderDetailController::class, 'destroy']);
         Route::get('/order/{orderId}', [OrderDetailController::class, 'show']);
+        Route::get('/{id}', [OrderDetailController::class, 'show']);
     });
+
 
     // Products routes
     Route::prefix('products')->group(function () {

@@ -10,12 +10,26 @@ class OrderDetailRepository implements OrderDetailRepositoryInterface
 {
     public function getAll()
     {
-        return OrderDetail::paginate(20);
+        return OrderDetail::with(['product' => function ($query) {
+            $query->select('id', 'name'); // Select only 'id' and 'name' columns
+        }])->paginate(20); // Eager load product
     }
 
     public function getByOrderId(int $orderId)
     {
-        return OrderDetail::where('order_id', $orderId)->get();
+        return OrderDetail::with(['product:id,name']) // Eager load product with only id and name columns
+            ->where('order_id', $orderId)
+            ->get()
+            ->map(function ($orderDetail) {
+                return [
+                    'id' => $orderDetail->id,
+                    'product_id' => $orderDetail->product_id,
+                    'quantity' => $orderDetail->quantity,
+                    'unit_price' => $orderDetail->unit_price,
+                    'total_price' => $orderDetail->total_price,
+                    'product_name' => $orderDetail->product->name, // Add product name
+                ];
+            });
     }
 
     public function create(object $data)
