@@ -35,6 +35,7 @@
 
 <script setup>
 import { ref, defineProps, defineEmits, computed } from 'vue';
+import { useRouter } from 'vue-router';
 
 const props = defineProps({
   isVisible: Boolean,
@@ -42,6 +43,7 @@ const props = defineProps({
 });
 
 const emit = defineEmits(['close', 'save']);
+const router = useRouter();
 
 const firstname = ref('');
 const lastname = ref('');
@@ -95,6 +97,7 @@ const saveOrder = async () => {
     }
 
     emit('save');
+    router.push('/kiosk/products'); // Navigate to the products page after saving
   } catch (error) {
     console.error('Error saving order:', error.message);
     // Handle error gracefully, e.g., show error message to the user

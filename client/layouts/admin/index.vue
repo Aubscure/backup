@@ -130,7 +130,7 @@
                 </div>
             </div>
 
-            <main :class="{ '': !sidebarOpen }" class="mb-20">
+            <main :class="{ '': !sidebarOpen }" class="mb-40">
                 <div class="px-4 py-10 sm:px-6 lg:px-8 lg:py-6">
                     <slot />
                 </div>
