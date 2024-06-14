@@ -15,10 +15,6 @@
             @click.prevent="activeTab = 'pending'">Pending</a>
         <a href="#" 
             class="px-1 pb-4 text-sm font-medium text-gray-200 border-b-2 border-transparent whitespace-nowrap hover:border-gray-300"
-            :class="{'border-yellow-500 text-yellow-500': activeTab === 'processing'}"
-            @click.prevent="activeTab = 'processing'">Processing</a>
-        <a href="#" 
-            class="px-1 pb-4 text-sm font-medium text-gray-200 border-b-2 border-transparent whitespace-nowrap hover:border-gray-300"
             :class="{'border-green-500 text-green-500': activeTab === 'completed'}"
             @click.prevent="activeTab = 'completed'">Completed</a>
       </nav>
@@ -47,7 +43,6 @@
                 :class="[
                   'font-semibold',
                   order.order_status.toLowerCase() === 'pending' ? 'text-red-500' : '',
-                  order.order_status.toLowerCase() === 'processing' ? 'text-yellow-500' : '',
                   order.order_status.toLowerCase() === 'completed' ? 'text-green-500' : ''
                 ]">
                 {{ formattedStatus(order.order_status) }}
